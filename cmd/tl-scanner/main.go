@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/igungor/tl"
+	"github.com/alimy/tl"
 )
 
 func main() {

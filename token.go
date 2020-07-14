@@ -2,8 +2,10 @@
 
 package tl
 
-import "fmt"
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 // Token represents a lexical token.
 type Token struct {
@@ -35,15 +37,14 @@ func (t Token) HasName() bool {
 // HasNamespace reports whether the token literal is lc-ident-ns or uc-ident-ns.
 func (t Token) HasNamespace() bool {
 	// only lc-ident-full has a name
-	if t.Token != ItemLowerIdent || t.Token != ItemUpperIdent {
-		return false
+	switch t.Token {
+	case ItemLowerIdent, ItemUpperIdent:
+		fields := strings.Split(t.Literal, ".")
+		if len(fields) >= 2 && fields[1] != "" {
+			return true
+		}
 	}
-
-	fields := strings.Split(t.Literal, ".")
-	if len(fields) == 1 || (len(fields) == 2 && fields[1] == "") {
-		return false
-	}
-	return true
+	return false
 }
 
 // Item represents a lexical token type.
